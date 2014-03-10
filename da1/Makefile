@@ -16,7 +16,7 @@ BULDDEPS=
 CLEANDEPS=
 ifeq ($(MODE),DEBUG)
 CFLAGS+= -g
-BUILDDEPS+=tests
+BUILDDEPS+=tests testscheck
 CLEANDEPS+=testsclean
 endif
 
@@ -37,6 +37,9 @@ build:
 
 tests:
 	cd tests; make
+
+testscheck:
+	cd tests; ./check.sh
 
 testsclean:
 	cd tests; make clean

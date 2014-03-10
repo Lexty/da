@@ -2,8 +2,13 @@
 #include <string.h>
 #include "../../src/counting-sort.c"
 
-int main()
+int quiet, failed;
+
+int main(int argc, char **argv)
 {
+	quiet = (argc == 1 ? 0 : 1);
+	failed = 0;
+
 	void test(const char *t_name, const int t_result);
 	int char_arr_eq(const char *s1, const char *s2);
 	int int_arr_eq(const int *a, const int *b);
@@ -78,7 +83,7 @@ int main()
 	test("Test sort keys #2", int_arr_eq(keys_out2, keys_exp2));
 	test("Test sort values #2", str_arr_eq(val_out2, val_exp2, n));
 
-	return 0;
+	return failed;
 }
 
 
@@ -86,7 +91,6 @@ int getMax(int arr[], int size)
 {
 	int max = 0;
 	for (int i = 0; i < size; i++) {
-	//	printf("%i\n", arr[i]);
 		max = (arr[i] > max ? arr[i] : max);
 	}
 	return max;
@@ -98,11 +102,14 @@ void test(const char *t_name, const int t_result)
 	static char *tr = "\033[31m";
 	static char *tn = "\033[0m";
 
-	printf("%s%s\t%s%s\n",
-			(t_result ? tg : tr),
-			t_name,
-			(t_result ? "passed!" : "failed!"),
-			tn);
+	failed = (t_result ? failed : 1);
+
+	if (!quiet)
+		printf("%s%s\t%s%s\n",
+				(t_result ? tg : tr),
+				t_name,
+				(t_result ? "passed!" : "failed!"),
+				tn);
 }
 
 /**
