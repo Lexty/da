@@ -1,5 +1,6 @@
 CC=gcc
-CFLAGS=-pedantic -Wall -std=c99 -Werror -Wno-sign-compare -lm
+#CFLAGS=-pedantic -Wall -std=c99 -Werror -Wno-sign-compare -lm -g
+CFLAGS=-pedantic -std=c99 -Werror -Wno-sign-compare -lm -g
 SRC=counting-sort.c
 OUT=counting-sort
 
