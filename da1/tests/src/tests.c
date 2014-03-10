@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include "../../src/counting-sort.c"
 
 int main()
 {
@@ -8,8 +9,6 @@ int main()
 	int int_arr_eq(const int *a, const int *b);
 	int str_arr_eq(char *s1[], char *s2[], const int size);
 	int getMax(int arr[], int size);
-	void csort(int *a, char *t[64], int k, int n, int *b, char *v[64]);
-
 
 	int k, n;
 
@@ -83,26 +82,6 @@ int main()
 }
 
 
-void csort(int *a, char *t[64], int k, int n, int *b, char *v[64])
-{
-	int c[k];
-
-	for (int i = 0; i < k; i++)
-		c[i] = 0;
-
-	for (int i = 0; i < n; i++)
-		c[a[i]]++;
-
-	for (int i = 1; i < k; i++)
-		c[i] += c[i-1];
-
-	for (int i = (n-1); i >= 0; i--) {
-		b[c[a[i]]-1] = a[i];
-		v[c[a[i]]-1] = t[i];
-		c[a[i]]--;
-	}
-}
-
 int getMax(int arr[], int size)
 {
 	int max = 0;
@@ -112,7 +91,7 @@ int getMax(int arr[], int size)
 	}
 	return max;
 }
-/* Tests */
+
 void test(const char *t_name, const int t_result)
 {
 	static char *tg = "\033[32m";

@@ -1,7 +1,5 @@
-MODE=DEBUG
-
 CC=gcc
-CFLAGS=-pedantic -Wall -std=c99 -Werror -Wno-sign-compare -lm
+CFLAGS=-pedantic -std=c99 -Wno-sign-compare -lm -g
 LINK=$(CC)
 
 EXEC=$(shell basename `pwd`)
@@ -12,15 +10,8 @@ SOURCES=$(wildcard src/*.c)
 OBJECTS=$(patsubst %.c,%.o,$(SOURCES))
 
 .SUFFIXES: .c .o
-BULDDEPS=
-CLEANDEPS=
-ifeq ($(MODE),DEBUG)
-CFLAGS+= -g
-BUILDDEPS+=tests
-CLEANDEPS+=testsclean
-endif
 
-all: $(TARGET) $(BUILDDEPS)
+all: $(TARGET)
 
 $(TARGET): build $(OBJECTS)
 	$(LINK) -o $(TARGET) $(patsubst src/%,build/%,$(OBJECTS))
@@ -34,15 +25,7 @@ $(OBJECTS): $(SOURCES)
 build:
 	@mkdir -p build
 
-
-tests:
-	cd tests; make
-
-testsclean:
-	cd tests; make clean
-
-
-clean: $(CLEANDEPS)
+clean:
 	rm -rf build
 	rm $(EXEC)
 
